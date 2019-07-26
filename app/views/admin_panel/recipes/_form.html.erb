@@ -1,0 +1,112 @@
+<%= form_for [:admin_panel, @recipe] do |f| %>
+  <% if @recipe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+
+      <ul>
+      <% @recipe.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description, class: 'editable' %>
+  </div>
+  <div class="field">
+    <%= f.label :category_id %><br>
+    <%= f.collection_select :category_id, @categories, :id, :name %>
+  </div>
+
+  <table>
+    <tr>
+      <th colspan="2">Images</th>
+    </tr>
+    <tr>
+      <th>Name</th>
+      <th>Selected</th>
+      <th>Delete</th>
+    </tr>
+    <%= f.fields_for :images, @recipe.images do |f_image| %>
+      <% image = f_image.object %>
+      <tr>
+        <td>
+          <%= f_image.file_field :path %>
+        </td>
+        <% if image.persisted? %>
+          <td>
+            <%= image_tag(image.path.thumb.url, height: '50') %>
+          </td>
+          <td>
+            <%= f_image.check_box :selected %>
+          </td>
+          <td>
+            <%= f_image.check_box "_destroy" %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <table>
+    <tr>
+      <th colspan="2">Ingredients</th>
+    </tr>
+    <tr>
+      <th>Name</th>
+      <th>Amount</th>
+    </tr>
+    <%= f.fields_for :ingredient_recipes, @recipe.ingredient_recipes do |f_ingredient_recipe| %>
+      <% ingredient_recipe = f_ingredient_recipe.object %>
+      <tr>
+        <td>
+          <%= f_ingredient_recipe.collection_select :ingredient_id, @ingredients, :id, :name, include_blank: true %>
+        </td>
+        <td>
+          <%= f_ingredient_recipe.text_field :amount %>
+        </td>
+        <% if ingredient_recipe.persisted? %>
+          <td>
+            <%= f_ingredient_recipe.check_box "_destroy" %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <table>
+    <tr>
+      <th colspan="2">Tags</th>
+    </tr>
+    <tr>
+      <th>Name</th>
+      <th>Amount</th>
+    </tr>
+    <%= f.fields_for :recipe_tags, @recipe.recipe_tags do |f_recipe_tag| %>
+      <% recipe_tag = f_recipe_tag.object %>
+      <tr>
+        <td>
+          <%= f_recipe_tag.collection_select :tag_id, @tags, :id, :name, include_blank: true %>
+        </td>
+        <td>
+          <%= f_recipe_tag.text_field :amount %>
+        </td>
+        <% if recipe_tag.persisted? %>
+          <td>
+            <%= f_recipe_tag.check_box "_destroy" %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

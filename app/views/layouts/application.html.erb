@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JuicesBackend</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <% if admin_signed_in? %>
+      <%= link_to 'Recipes', admin_panel_recipes_path %>
+      |
+      <%= link_to 'Categories', admin_panel_categories_path %>
+      |
+      <%= link_to 'Tags', admin_panel_tags_path %>
+      |
+      <%= link_to 'Ingredients', admin_panel_ingredients_path %>
+      |
+      <%= link_to('Logout', destroy_admin_session_path, method: :delete) %>        
+    <% end %>
+
+    <%= yield %>
+  </body>
+</html>
