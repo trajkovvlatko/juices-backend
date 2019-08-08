@@ -82,6 +82,6 @@ test:
 #
 production:
   <<: *default
-  database: juices_production
-  username: juices
+  database: <%= ENV['MYAPP_DATABASE_NAME'] %>
+  username: <%= ENV['MYAPP_DATABASE_USERNAME'] %>
   password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>

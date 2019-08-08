@@ -1,4 +1,4 @@
-ruby '2.6.1'
+ruby '2.6.3'
 source 'https://rubygems.org'
 
 gem 'dotenv-rails', groups: [:development, :test]
@@ -62,3 +62,8 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog-aws'
 gem 'rb-readline'
+
+gem 'capistrano', '~> 3.11'
+gem 'capistrano-rails', '~> 1.4'
+gem 'capistrano-passenger', '~> 0.2.0'
+gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
