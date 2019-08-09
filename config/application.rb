@@ -21,7 +21,7 @@ module JuicesBackend
     # the framework and any gems in your application.
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'localhost:3006'
+        origins ENV['FRONTEND_PATH']
         resource '*', {
           headers: :any,
           expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],
