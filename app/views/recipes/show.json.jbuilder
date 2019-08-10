@@ -1,6 +1,16 @@
 json.extract! @recipe, :id, :name, :description
 json.category @recipe.category, :id, :name, :icon
-json.images @recipe.images.sort_by{ |a| a.selected ? 0 : 1 }.map(&:path)
+json.images @recipe.images.sort_by{ |a| a.selected ? 0 : 1 }.map{ |i|
+  {
+    url: "#{root_url}#{i.path}",
+    thumb: {
+      url: "#{root_url}#{i.path.thumb}"
+    },
+    medium: {
+      url: "#{root_url}#{i.path.medium}"
+    }
+  }
+}
 
 json.tags @recipe.recipe_tags do |recipe_tag|
   json.id recipe_tag.id
