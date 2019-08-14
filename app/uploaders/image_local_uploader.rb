@@ -10,6 +10,8 @@ class ImageLocalUploader < CarrierWave::Uploader::Base
     "images/#{model.recipe_id}/#{model.id}"
   end
 
+  process :auto_orient
+
   # Create different versions of your uploaded files:
   version :thumb do
     process resize_to_fit: [256, 256]
@@ -23,5 +25,11 @@ class ImageLocalUploader < CarrierWave::Uploader::Base
   # For images you might use something like this:
   def extension_whitelist
     %w(jpg jpeg gif png)
+  end
+
+  def auto_orient
+    manipulate! do |img|
+      img = img.auto_orient
+    end
   end
 end
